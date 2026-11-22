@@ -1,0 +1,55 @@
+{
+ "tests": [
+  {
+   "in": {
+    "csv": "id,action,src,dst,proto,port\n10,allow,10.10.0.0/16,10.20.5.10,tcp,443\n20,allow,any,10.20.5.20,tcp,3389\n30,allow,10.10.5.0/24,10.20.5.10,tcp,443\n40,deny,10.10.0.0/16,10.20.0.0/16,any,any\n50,allow,10.10.8.0/24,10.20.6.15,tcp,1433\n60,allow,any,any,any,any",
+    "tsrc": "10.10.8.5",
+    "tdst": "10.20.6.15",
+    "tproto": "tcp",
+    "tport": 1433
+   },
+   "v": {
+    "levels": [
+     "ok",
+     "warn",
+     "warn",
+     "ok",
+     "err",
+     "err"
+    ],
+    "hit": "40"
+   }
+  },
+  {
+   "in": {
+    "csv": "id;action;src;dst;proto;port\n1;permit;2001:db8:10::/48;2001:db8:20::25;tcp;25\n2;permit;any;2001:db8:20::25;tcp;20000-30000\n3;deny;any;any;any;any"
+   },
+   "v": {
+    "levels": [
+     "ok",
+     "warn",
+     "ok"
+    ],
+    "hit": null
+   }
+  },
+  {
+   "in": {
+    "csv": "action,src,dst\nmaybe,any,any"
+   },
+   "err": "csv"
+  },
+  {
+   "in": {
+    "csv": "action,src,dst\nallow,10.0.0.300/24,any"
+   },
+   "err": "csv"
+  },
+  {
+   "in": {
+    "csv": "action,src,dst,port\nallow,any,any,70000"
+   },
+   "err": "csv"
+  }
+ ]
+}
